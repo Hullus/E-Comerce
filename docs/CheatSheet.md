@@ -1,70 +1,39 @@
-ecommerce-microservices/
-│
-├── api-gateway/
-│   ├── src/
-│   └── pom.xml
-│
-├── auth-service/
-│   ├── src/
-│   └── pom.xml
-│
-├── product-service/
-│   ├── src/
-│   └── pom.xml
-│
-├── order-service/
-│   ├── src/
-│   └── pom.xml
-│
-├── user-service/
-│   ├── src/
-│   └── pom.xml
-│
-├── payment-service/
-│   ├── src/
-│   └── pom.xml
-│
-├── shipping-service/
-│   ├── src/
-│   └── pom.xml
-│
-├── discovery-server/
-│   ├── src/
-│   └── pom.xml
-│
-├── config-server/
-│   ├── src/
-│   └── pom.xml
-│
-├── monitoring-service/
-│   ├── src/
-│   └── pom.xml
-│
-├── frontend/
-│   ├── web-app/
-│   └── mobile-app/
-│
-├── kubernetes/
-│   ├── deployments/
-│   ├── services/
-│   └── config-maps/
-│
-├── docker/
-│   └── docker-compose.yml
-│
-├── scripts/
-│   ├── build-all.sh
-│   └── deploy-all.sh
-│
-├── docs/
-│   ├── api-docs/
-│   ├── architecture/
-│   └── deployment-guide.md
-│
+E-Commerce/
 ├── .github/
-│   └── workflows/
-│       └── ci-cd.yml
-│
+├── .idea/
+├── src/
+│   ├── backend/
+│   │   ├── api-gateway/
+│   │   ├── auth-service/
+│   │   ├── config-server/
+│   │   ├── discovery-server/
+│   │   ├── core-services/
+│   │   │   ├── order-service/
+│   │   │   ├── payment-service/
+│   │   │   ├── product-service/
+│   │   │   ├── shipping-service/
+│   │   │   └── user-service/
+│   │   └── monitoring-service/
+│   └── frontend/
+│       ├── web/
+│       └── mobile/
+├── devops/
+│   ├── docker/
+│   │   ├── development/
+│   │   └── production/
+│   └── kubernetes/
+│       ├── development/
+│       └── production/
+├── docs/
+│   ├── api/
+│   ├── architecture/
+│   └── user-guides/
+├── scripts/
+│   ├── build/
+│   ├── deploy/
+│   └── test/
+├── tests/
+│   ├── integration/
+│   └── unit/
 ├── .gitignore
-├── README.md
-└── pom.xml
+└── README.md
