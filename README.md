@@ -1,52 +1,72 @@
+# E-commerce Microservices Architecture
+
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': { 'background': '#ffffff' }}}%%
 flowchart TD
-    subgraph User["👤 1. User Interaction"]
-        A[fa:fa-user User] -->|Browses/Orders| B[fa:fa-laptop Web/Mobile App]
-    end
+    A[fa:fa-user User] -->|Browses/Orders| B[fa:fa-laptop Web/Mobile App]
+    B -->|Sends request| C{fa:fa-random API Gateway}
+    C -->|Authenticates| D[fa:fa-key Auth Service]
+    C -->|Routes to| E[[fa:fa-cogs Core Services]]
+    E --> F[fa:fa-box Product Service]
+    E --> G[fa:fa-shopping-cart Order Service]
+    E --> H[fa:fa-user-circle User Service]
+    F -.->|Reads/Writes| I[(fa:fa-database Product DB)]
+    G -.->|Reads/Writes| J[(fa:fa-database Order DB)]
+    H -.->|Reads/Writes| K[(fa:fa-database User DB)]
+    G -->|Creates order| L{fa:fa-exchange-alt Message Queue}
+    L -->|Notifies| M[fa:fa-credit-card Payment Service]
+    L -->|Notifies| N[fa:fa-truck Shipping Service]
+    E -.->|Uses| O[[fa:fa-tools Support Services]]
+    O --> P[fa:fa-bolt Caching]
+    O --> Q[fa:fa-file-alt Logging]
+    O --> R[fa:fa-chart-line Monitoring]
 
-    subgraph Gateway["🔐 2. API Gateway"]
-        B -->|Sends request| C{fa:fa-random API Gateway}
-        C -->|Authenticates| D[fa:fa-key Auth Service]
-    end
+    classDef default fill:#f9f9f9,stroke:#333,stroke-width:2px;
+    classDef highlight fill:#e8f4ff,stroke:#4a69bd,stroke-width:2px;
+    class A,B,C,D,E,F,G,H,M,N highlight;
+```
 
-    subgraph Core["⚙️ 3. Core Services"]
-        C -->|Routes to| E[[fa:fa-cogs Core Services]]
-        E --> F[fa:fa-box Product Service]
-        E --> G[fa:fa-shopping-cart Order Service]
-        E --> H[fa:fa-user-circle User Service]
-    end
+## Service Descriptions
 
-    subgraph Data["💾 4. Data Storage"]
-        F -.->|Reads/Writes| I[(fa:fa-database Product DB)]
-        G -.->|Reads/Writes| J[(fa:fa-database Order DB)]
-        H -.->|Reads/Writes| K[(fa:fa-database User DB)]
-    end
+### 1. User Interaction
+- **Web/Mobile App**: Frontend applications that users interact with to browse products and place orders.
 
-    subgraph Process["🔄 5. Order Processing"]
-        G -->|Creates order| L{fa:fa-exchange-alt Message Queue}
-        L -->|Notifies| M[fa:fa-credit-card Payment Service]
-        L -->|Notifies| N[fa:fa-truck Shipping Service]
-    end
+### 2. API Gateway
+- **API Gateway**: Routes incoming requests to appropriate microservices, handles authentication, and manages API versioning.
+- **Auth Service**: Manages user authentication and authorization, generating and validating JWT tokens.
 
-    subgraph Support["🛠️ 6. Support Services"]
-        E -.->|Uses| O[[fa:fa-tools Support Services]]
-        O --> P[fa:fa-bolt Caching]
-        O --> Q[fa:fa-file-alt Logging]
-        O --> R[fa:fa-chart-line Monitoring]
-    end
+### 3. Core Services
+- **Product Service**: Manages product catalog, including product information, pricing, and availability.
+- **Order Service**: Handles order creation, processing, and management.
+- **User Service**: Manages user profiles, preferences, and account information.
 
-    classDef userStyle fill:#e6f3ff,stroke:#4a69bd,stroke-width:2px
-    classDef gatewayStyle fill:#d5e8d4,stroke:#82b366,stroke-width:2px
-    classDef coreStyle fill:#ffe6cc,stroke:#d79b00,stroke-width:2px
-    classDef dataStyle fill:#f8cecc,stroke:#b85450,stroke-width:2px
-    classDef processStyle fill:#e1d5e7,stroke:#9673a6,stroke-width:2px
-    classDef supportStyle fill:#fff2cc,stroke:#d6b656,stroke-width:2px
+### 4. Data Storage
+- Each core service has its own dedicated database to ensure data isolation and service independence.
 
-    class User,A,B userStyle
-    class Gateway,C,D gatewayStyle
-    class Core,E,F,G,H coreStyle
-    class Data,I,J,K dataStyle
-    class Process,L,M,N processStyle
-    class Support,O,P,Q,R supportStyle
+### 5. Order Processing
+- **Message Queue**: Facilitates asynchronous communication between services, ensuring reliable order processing.
+- **Payment Service**: Handles payment processing and verification.
+- **Shipping Service**: Manages order fulfillment and shipping logistics.
 
-    linkStyle default stroke-width:2px,fill:none,stroke:gray
+### 6. Support Services
+- **Caching**: Improves performance by caching frequently accessed data.
+- **Logging**: Centralizes log collection for monitoring and troubleshooting.
+- **Monitoring**: Tracks system health, performance metrics, and alerts on issues.
+
+## Technology Stack
+
+- **Frontend**: React.js, React Native
+- **API Gateway**: Spring Cloud Gateway
+- **Authentication**: Spring Security, JWT
+- **Microservices Framework**: Spring Boot
+- **Database**: PostgreSQL (relational), MongoDB (non-relational)
+- **Message Queue**: Apache Kafka
+- **Caching**: Redis
+- **Service Discovery**: Netflix Eureka
+- **Containerization**: Docker
+- **Orchestration**: Kubernetes
+- **Logging**: ELK Stack (Elasticsearch, Logstash, Kibana)
+- **Monitoring**: Prometheus, Grafana
+- **CI/CD**: Jenkins, GitLab CI
+
+This architecture enables a scalable, maintainable, and robust e-commerce platform. Each microservice is independently deployable and scalable, allowing for efficient resource utilization and easier maintenance.
