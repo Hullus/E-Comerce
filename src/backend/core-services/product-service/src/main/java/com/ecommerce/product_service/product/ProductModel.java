@@ -13,7 +13,7 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name = "products")
-public class Product {
+public class ProductModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
