@@ -1,13 +1,13 @@
-package com.ecommerce.discovery_server;
+package com.ecommerce.order_service;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@EnableEurekaServer
-public class DiscoveryServerApplication {
+public class OrderServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DiscoveryServerApplication.class, args);
+		SpringApplication.run(OrderServiceApplication.class, args);
 	}
+
 }
