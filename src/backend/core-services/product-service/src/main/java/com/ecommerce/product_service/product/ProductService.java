@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.ecommerce.product_service.product.dto.ProductCreationDto;
+
 @Service
 public class ProductService {
     private final ProductRepo productRepo;
@@ -12,8 +14,9 @@ public class ProductService {
         this.productRepo = productRepo;
     }
 
-    public ProductModel createProduct(ProductModel dto){
-        return productRepo.save(dto);
+    public ProductModel createProduct(ProductCreationDto dto){
+        var newProduct = toProductModel(dto);
+        return productRepo.save(newProduct);
     }
 
     public ProductModel getProduct(Long id){
@@ -27,4 +30,14 @@ public class ProductService {
     public void deleteProduct(Long id){
         productRepo.deleteById(id);
     }
+
+    public static ProductModel toProductModel(ProductCreationDto dto) {
+        return ProductModel.createProduct(
+            dto.getName(),
+            dto.getDescription(),
+            dto.getPrice(),
+            dto.getInventory()
+        );
+    }
+ 
 }

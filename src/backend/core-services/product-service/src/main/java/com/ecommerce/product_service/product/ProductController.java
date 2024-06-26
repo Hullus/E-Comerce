@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ecommerce.product_service.product.dto.ProductCreationDto;
+
 import java.util.List;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,10 +30,11 @@ public class ProductController {
     }
 
     @PostMapping()
-    public ProductModel postMethodName(@RequestBody ProductModel entity) {
-        return productService.createProduct(entity);
+    public ProductCreationDto postMethodName(@RequestBody ProductCreationDto dto) {
+        productService.createProduct(dto);
+        var response = ProductCreationDto.createProductDto(dto.getName(), dto.getDescription(), dto.getPrice(), dto.getInventory());
+        return response;
     }
-    
 
     @GetMapping("/{id}")
     public ProductModel getProduct(@RequestParam Long id) {
@@ -48,5 +51,4 @@ public class ProductController {
     public void deleteProduct(@RequestParam Long id){
         productService.deleteProduct(id);
     }
-    
 }

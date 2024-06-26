@@ -9,9 +9,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@NoArgsConstructor
 @Table(name = "products")
 public class ProductModel {
     @Id
@@ -27,4 +29,16 @@ public class ProductModel {
     private BigDecimal price;
 
     private Integer inventory;
+
+
+    private ProductModel(String name, String description, BigDecimal price, Integer inventory) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.inventory = inventory;
+    }
+
+    public static ProductModel createProduct(String name, String description, BigDecimal price, Integer inventory){
+        return new ProductModel(name, description, price, inventory);
+    }
 }
