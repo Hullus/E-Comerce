@@ -22,7 +22,7 @@ public class ProductCreationDto {
         this.inventory = inventory;
     }
 
-    public static ProductCreationDto createProductDto(String name, String description, BigDecimal price, Integer inventory) {
+    public static ProductCreationDto createDto(String name, String description, BigDecimal price, Integer inventory) {
         if (name == null || name.isEmpty()) {
             throw new IllegalArgumentException("Name cannot be null or empty");
         }
